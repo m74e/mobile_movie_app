@@ -9,6 +9,7 @@ const MovieCard = ({
   title,
   vote_average,
   release_date,
+  adult,
 }: Movie) => {
   console.log(poster_path);
   return (
@@ -23,7 +24,7 @@ const MovieCard = ({
             }}
             className="w-full h-52 rounded-lg"
           />
-          <Text className="text-white text-sm font-bold mt-2">{title}</Text>
+          <Text numberOfLines={1} className="text-white text-sm font-bold mt-2">{title}</Text>
           <View className="flex-row items-center justify-start gap-x-1 ">
             <Image source={icons.star} className="size-4" />
 
@@ -35,7 +36,7 @@ const MovieCard = ({
               <Text className="text-xs text-light-300 font-medium mt-1">
                 {release_date?.split("-")[0]}
               </Text>
-              <Text className="text-light-300 font-medium text-xs">Movie</Text>
+              <Text className="text-light-300 font-medium text-xs">{adult ? "+18":"+5"}</Text>
             </View>     
         </TouchableOpacity>
       </Link>
