@@ -25,13 +25,18 @@ const MovieCard = ({
           />
           <Text className="text-white text-sm font-bold mt-2">{title}</Text>
           <View className="flex-row items-center justify-start gap-x-1 ">
-            <Image src={icons.star} className="size-4" />
-            <Text>
-              <Text className="text-white text-xs">
-                {Math.round(vote_average / 2)}
-              </Text>
+            <Image source={icons.star} className="size-4" />
+
+            <Text className="text-white text-xs font-bold uppercase">
+              {Math.round(vote_average / 2)}
             </Text>
-          </View>
+                 </View>
+            <View className="flex-row items-center justify-between ">
+              <Text className="text-xs text-light-300 font-medium mt-1">
+                {release_date?.split("-")[0]}
+              </Text>
+              <Text className="text-light-300 font-medium text-xs">Movie</Text>
+            </View>     
         </TouchableOpacity>
       </Link>
     </>
