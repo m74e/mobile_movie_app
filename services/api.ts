@@ -8,18 +8,15 @@ export const TMDB_CONFIG = {
     }
 }
 export const fetchPMovies = async ({query}:{query:string}) => {
-    const baseUrl=TMDB_CONFIG.BASE_URL
-
+    // const base=TMDB_CONFIG.BASE_URL
     const endpoint=query?
-    `${baseUrl}/search/movie?query=${encodeURIComponent(query)}`:
-    `${baseUrl}/discover/movie?sort_by=popularity.desc`;
-
+    `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`:
+    `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
     const response=await fetch(endpoint,{
         method:'GET',
         headers:TMDB_CONFIG.header,
         
     });
-    
     if (!response.ok) {
         //@ts-ignore
         throw new Error('Failed to fetch movies',response.statusText);
