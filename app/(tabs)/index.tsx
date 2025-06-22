@@ -26,7 +26,7 @@ export default function Index() {
       <Image source={images.bg} className="absolute w-full z-0" />
 
       <ScrollView
-        className="flex-1 px-5 "
+        className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 10, minHeight: "100%" }}
       >
@@ -58,10 +58,12 @@ export default function Index() {
                 )}
                  keyExtractor={(item) => item.id.toString()}
                 numColumns={3}
-                columnWrapperStyle={{justifyContent: 'flex-start',
+                columnWrapperStyle={{
+                  justifyContent: "center",
                   gap:10,
-                  paddingRight:5,
+                  // paddingRight:5,
                   marginBottom:10,
+                  
                 }}
                 className="mt-2 pb-32"
                 scrollEnabled={false}

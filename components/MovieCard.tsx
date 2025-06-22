@@ -11,7 +11,6 @@ const MovieCard = ({
   release_date,
   adult,
 }: Movie) => {
-  console.log(poster_path);
   return (
     <>
       <Link href={`/movies/${id}`} asChild>
