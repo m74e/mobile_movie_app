@@ -35,7 +35,7 @@ useEffect(() => {
     fetchData(); }
  }, []);
 
-  return { data, error, loading, refetch:fetchData };
+  return { data, error, loading, refetch:fetchData ,reset };
 };
 
 export default useFetch;

@@ -1,26 +1,40 @@
 import { View, Text, Image, FlatList, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "@/services/useFetch";
 import { fetchPMovies } from "@/services/api";
 import { useRouter } from "expo-router";
 import { images } from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
-import { SearchBar } from "react-native-screens";
 import { icons } from "@/constants/icons";
+import SearchBar from "@/components/searchBar";
 
 const search = () => {
   const router = useRouter();
 
-const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const {
     data: movies,
     loading,
     error,
-  } = useFetch(() => fetchPMovies({ query: "" }));
+    refetch: loadMovies,
+    reset,
+  } = useFetch(() => fetchPMovies({ query: searchQuery }), false);
+
+  useEffect(() => {
+    const searchFun = async () => {
+      if (searchQuery.trim()) {
+        await loadMovies();
+      } else {
+        reset();
+      }
+    };
+
+    searchFun();
+  }, [searchQuery]);
 
   return (
-    <View className="flex-1 bg-primary items-center justify-center">
+    <View className="flex-1 bg-primary ">
       <Image
         source={images.bg}
         className="flex-1 absolute w-full z-0"
@@ -44,7 +58,11 @@ const [searchQuery, setSearchQuery] = useState('');
             </View>
 
             <View className="my-5">
-              <SearchBar placeholder="Search movies ..." />
+              <SearchBar
+                placeholder="Search movies ..."
+                value={searchQuery}
+                onChangeText={(text: string) => setSearchQuery(text)}
+              />
             </View>
             {loading && (
               <ActivityIndicator
@@ -59,17 +77,14 @@ const [searchQuery, setSearchQuery] = useState('');
               </Text>
             )}
 
-            {!loading &&
-              !error &&
-              "SEARCH TERM".trim() &&
-              movies.length > 0 && (
-                <>
-                  <Text className="text-xl text-white font-bold">
-                    Search Result For{" "}
-                    <Text className="text-accent">SEARCH TERM</Text>
-                  </Text>
-                </>
-              )}
+            {!loading && !error && searchQuery.trim() && movies.length > 0 && (
+              <>
+                <Text className="text-xl text-white font-bold">
+                  Search Result For{" "}
+                  <Text className="text-accent">{searchQuery}</Text>
+                </Text>
+              </>
+            )}
           </>
         }
       />
