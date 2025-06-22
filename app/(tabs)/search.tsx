@@ -22,15 +22,17 @@ const search = () => {
   } = useFetch(() => fetchPMovies({ query: searchQuery }), false);
 
   useEffect(() => {
-    const searchFun = async () => {
+    const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies();
       } else {
         reset();
       }
-    };
+    }, 500);
 
-    searchFun();
+    return () => clearTimeout(timeoutId);
+
+    return () => clearTimeout(timeoutId);
   }, [searchQuery]);
 
   return (
@@ -87,6 +89,17 @@ const search = () => {
             )}
           </>
         }
+        ListEmptyComponent={
+        !error && !loading ? (
+          <>
+          <View className="mt-10 px-5">
+<Text className="text-gray-500 text-center">
+{searchQuery.trim() ? 'No movies found for this search.' : 'Search for movies or series using the search bar above.'}
+</Text>
+          </View>
+          </>
+        ):null
+     }
       />
     </View>
   );
