@@ -7,6 +7,7 @@ import { images } from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
 import { icons } from "@/constants/icons";
 import SearchBar from "@/components/searchBar";
+import { upadateSearchCount } from "@/services/appwrite";
 
 const search = () => {
   const router = useRouter();
@@ -25,6 +26,9 @@ const search = () => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await loadMovies();
+       
+        if(movies?.length >0 && movies?.[0])
+          await  upadateSearchCount(searchQuery,movies[0]);
       } else {
         reset();
       }
@@ -32,7 +36,7 @@ const search = () => {
 
     return () => clearTimeout(timeoutId);
 
-    return () => clearTimeout(timeoutId);
+    // return () => clearTimeout(timeoutId);
   }, [searchQuery]);
 
   return (
